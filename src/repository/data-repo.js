@@ -26,5 +26,5 @@ const findAllByCollection = async (collection) => {
 
 export default {
     create,
-    findAll
+    findAllByCollection
 }
