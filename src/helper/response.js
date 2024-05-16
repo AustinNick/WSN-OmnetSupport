@@ -7,10 +7,11 @@ const SuccessWebResponse = (code, status, msg, data) => {
     }
 }
 
-const ErrorWebResponse = (code, msg) => {
+const ErrorWebResponse = (code, msg, errors) => {
     return {
         code: code,
-        msg: msg
+        msg: msg,
+        errors: errors
     }
 }
 
