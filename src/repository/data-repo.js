@@ -12,7 +12,7 @@ const create = async (data) => {
     })
 
     // Send data to client
-    io.emit('data', data);
+    io.emit('data', data)
 
     return data
 }
