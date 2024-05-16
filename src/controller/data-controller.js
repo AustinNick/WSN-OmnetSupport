@@ -1,8 +1,15 @@
 import dataRepository from '../repository/data-repo.js';
-import { SuccessWebResponse } from '../helper/response.js';
+import { SuccessWebResponse, ErrorWebResponse } from '../helper/response.js';
+import { validationResult } from 'express-validator';
 
-const insertData = async (req, res) => {
+const insertData = async (req, res, next) => {
   try {
+    const errors = validationResult(req)
+    if (!errors.isEmpty()) {
+      const error = ErrorWebResponse(400, "Bad Request", errors.array())
+      return res.status(400).json(error)
+    }
+    
     const data = await dataRepository.create(req.body);
     const response = SuccessWebResponse(200, "OK", "Success Insert Data", data)
     
@@ -12,7 +19,7 @@ const insertData = async (req, res) => {
   }
 }
 
-const getData = async (req, res) => {
+const getData = async (req, res, next) => {
   try {
     const data = await dataRepository.findAll();
     const response = SuccessWebResponse(200, "OK", "Success Get All Data", data)
