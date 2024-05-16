@@ -59,7 +59,7 @@
             }
 
             // Clear previous data for the collection
-            collectionElem.innerHTML = `<div class="collection-title">Collection: ${data.collection}</div>`;
+            collectionElem.innerHTML = `<div class="collection-title">Data: ${data.collection}</div>`;
 
             // Create HTML elements for each piece of data
             const korosiElem = document.createElement('div');
@@ -68,7 +68,7 @@
 
             const akselerometerElem = document.createElement('div');
             akselerometerElem.className = 'data-item';
-            akselerometerElem.innerText = `Akselerometer: ${data.akselerometer}`;
+            akselerometerElem.innerText = `Akselerometer: ${data.akselerometer} m/s^2`;
 
             const kelembapanElem = document.createElement('div');
             kelembapanElem.className = 'data-item';
@@ -76,7 +76,7 @@
 
             const teganganElem = document.createElement('div');
             teganganElem.className = 'data-item';
-            teganganElem.innerText = `Tegangan: ${data.tegangan}`;
+            teganganElem.innerText = `Tegangan: ${data.tegangan}V`;
 
             // Append the elements to the collection element
             collectionElem.appendChild(korosiElem);
