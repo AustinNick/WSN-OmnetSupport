@@ -4,12 +4,12 @@ import { io } from "./../app/web.js"
 
 const create = async (data) => { 
     // Logic to insert data to database
-    // db.collection(data.collection).add({
-    //     akselerometer: data.akselerometer,
-    //     kelembapan: data.kelembapan,
-    //     tegangan: data.tegangan,
-    //     korosi: data.korosi,
-    // })
+    db.collection(data.collection).add({
+        akselerometer: data.akselerometer,
+        kelembapan: data.kelembapan,
+        tegangan: data.tegangan,
+        korosi: data.korosi,
+    })
 
     // Send data to client
     io.emit('data', data);
@@ -17,10 +17,10 @@ const create = async (data) => {
     return data
 }
 
-const findAll = async () => {
+const findAll = async (collection) => {
     // Logic to get all data from database
-    db.collection()
-    return []
+    const data = db.collection(collection).get()
+    return (await data).docs.map(doc => doc.data())
 }
 
 export default {

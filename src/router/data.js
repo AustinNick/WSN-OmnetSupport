@@ -4,7 +4,7 @@ import { validatorData } from '../validator/validate.js';
 
 const router = Router()
 
-router.get('/data', dataController.getData)
+router.get('/data/:collection', dataController.getData)
 router.post('/data', validatorData, dataController.insertData)
 
 export default router

@@ -21,7 +21,7 @@ const insertData = async (req, res, next) => {
 
 const getData = async (req, res, next) => {
   try {
-    const data = await dataRepository.findAll();
+    const data = await dataRepository.findAll(req.params.collection);
     const response = SuccessWebResponse(200, "OK", "Success Get All Data", data)
 
     res.status(200).json(response);
