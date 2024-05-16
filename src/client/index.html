@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Real-time Data Display</title>
+    <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+    <style>
+        #dataDisplay {
+            font-family: Arial, sans-serif;
+            margin-top: 20px;
+        }
+
+        .data-collection {
+            margin-bottom: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .data-item {
+            margin-bottom: 5px;
+        }
+
+        .collection-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Real-time Data from OMNeT++</h1>
+    <div id="dataDisplay"></div>
+
+    <script>
+        const socket = io('http://localhost:3000');
+
+        socket.on('data', (data) => {
+            console.log('Received data from server:', data);
+            displayData(data);
+        });
+
+        function displayData(data) {
+            const dataDisplay = document.getElementById('dataDisplay');
+            let collectionElem = document.getElementById(`collection-${data.collection}`);
+
+            // If the collection does not exist, create a new section for it
+            if (!collectionElem) {
+                collectionElem = document.createElement('div');
+                collectionElem.id = `collection-${data.collection}`;
+                collectionElem.className = 'data-collection';
+
+                const titleElem = document.createElement('div');
+                titleElem.className = 'collection-title';
+                titleElem.innerText = `Collection: ${data.collection}`;
+
+                collectionElem.appendChild(titleElem);
+                dataDisplay.appendChild(collectionElem);
+            }
+
+            // Clear previous data for the collection
+            collectionElem.innerHTML = `<div class="collection-title">Collection: ${data.collection}</div>`;
+
+            // Create HTML elements for each piece of data
+            const korosiElem = document.createElement('div');
+            korosiElem.className = 'data-item';
+            korosiElem.innerText = `Korosi: ${data.korosi}`;
+
+            const akselerometerElem = document.createElement('div');
+            akselerometerElem.className = 'data-item';
+            akselerometerElem.innerText = `Akselerometer: ${data.akselerometer}`;
+
+            const kelembapanElem = document.createElement('div');
+            kelembapanElem.className = 'data-item';
+            kelembapanElem.innerText = `Kelembapan: ${data.kelembapan}`;
+
+            const teganganElem = document.createElement('div');
+            teganganElem.className = 'data-item';
+            teganganElem.innerText = `Tegangan: ${data.tegangan}`;
+
+            // Append the elements to the collection element
+            collectionElem.appendChild(korosiElem);
+            collectionElem.appendChild(akselerometerElem);
+            collectionElem.appendChild(kelembapanElem);
+            collectionElem.appendChild(teganganElem);
+        }
+    </script>
+</body>
+
+</html>
