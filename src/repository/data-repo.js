@@ -17,9 +17,10 @@ const create = async (data) => {
     return data
 }
 
-const findAll = async (collection) => {
+const findAllByCollection = async (collection) => {
     // Logic to get all data from database
     const data = db.collection(collection).get()
+
     return (await data).docs.map(doc => doc.data())
 }
 
