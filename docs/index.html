@@ -33,7 +33,7 @@
     <div id="dataDisplay"></div>
 
     <script>
-        const socket = io('http://localhost:3000');
+        const socket = io('https://omnetsupport-tin-0f1c07ee5e8f.herokuapp.com');
 
         socket.on('data', (data) => {
             console.log('Received data from server:', data);
