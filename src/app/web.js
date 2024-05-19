@@ -14,7 +14,7 @@ const io = new Server(server, {
 })
 
 app.use(cors(corsOptions))
-app.use(bodyParser.json());
+app.use(bodyParser.json())
 app.use(Express.json())
 app.use(dataRouter)
 

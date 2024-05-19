@@ -33,7 +33,7 @@
     <div id="dataDisplay"></div>
 
     <script>
-        const socket = io('https://omnetsupport-tin-0f1c07ee5e8f.herokuapp.com/');
+        const socket = io('http://localhost:3000');
 
         socket.on('data', (data) => {
             console.log('Received data from server:', data);
@@ -64,19 +64,19 @@
             // Create HTML elements for each piece of data
             const korosiElem = document.createElement('div');
             korosiElem.className = 'data-item';
-            korosiElem.innerText = `Korosi: ${data.korosi}`;
+            korosiElem.innerText = `Korosi: ${data.korosi} mm/th`;
 
             const akselerometerElem = document.createElement('div');
             akselerometerElem.className = 'data-item';
-            akselerometerElem.innerText = `Akselerometer: ${data.akselerometer} m/s^2`;
+            akselerometerElem.innerHTML = `Akselerometer: ${data.akselerometer} m/s<sup>2</sup>`;
 
             const kelembapanElem = document.createElement('div');
             kelembapanElem.className = 'data-item';
-            kelembapanElem.innerText = `Kelembapan: ${data.kelembapan}`;
+            kelembapanElem.innerText = `Kelembapan: ${data.kelembapan}% RH`;
 
             const teganganElem = document.createElement('div');
             teganganElem.className = 'data-item';
-            teganganElem.innerText = `Tegangan: ${data.tegangan}V`;
+            teganganElem.innerText = `Tegangan: ${data.tegangan} V`;
 
             // Append the elements to the collection element
             collectionElem.appendChild(korosiElem);

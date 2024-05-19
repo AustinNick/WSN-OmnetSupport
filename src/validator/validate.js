@@ -7,10 +7,10 @@ const validatorData = [
     body('korosi', 'Invalid no data').not().isEmpty(),
     body('collection', 'Invalid no data').not().isEmpty(),
     
-    body('akselerometer', 'Invalid must be alphanumeric').isAlphanumeric(),
-    body('kelembapan', 'Invalid must be alphanumeric').isAlphanumeric(),
-    body('tegangan', 'Invalid must be alphanumeric').isAlphanumeric(),
-    body('korosi', 'Invalid must be alphanumeric').isAlphanumeric(),
+    body('akselerometer', 'Invalid must be alphanumeric').isFloat(),
+    body('kelembapan', 'Invalid must be alphanumeric').isFloat(),
+    body('tegangan', 'Invalid must be alphanumeric').isFloat(),
+    body('korosi', 'Invalid must be alphanumeric').isFloat(),
 ]
 
 export {
