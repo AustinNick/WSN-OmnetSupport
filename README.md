@@ -12,4 +12,4 @@ Ini adalah tugas untuk mendukung simulasi omnet++ yang saya buat
 
 ### Notes
 
-Masih dalam tahap pemgembangan
+Masih dalam tahap pengembangan
