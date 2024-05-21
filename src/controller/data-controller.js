@@ -19,6 +19,17 @@ const insertData = async (req, res, next) => {
   }
 }
 
+const getCollections = async (req, res, next) => {
+  try {
+    const collections = await dataRepository.findAllCollections();
+    const response = SuccessWebResponse(200, "OK", "Success Get All Collections", collections)
+
+    res.status(200).json(response);
+  } catch (error) {
+    next(error)
+  }
+}
+
 const getDataByCollection = async (req, res, next) => {
   try {
     const data = await dataRepository.findAllByCollection(req.params.collection);
@@ -32,5 +43,6 @@ const getDataByCollection = async (req, res, next) => {
 
 export default {
   insertData,
+  getCollections,
   getDataByCollection,
 }

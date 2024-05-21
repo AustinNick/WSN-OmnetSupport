@@ -2,8 +2,7 @@ import fire from './../config/database.js'
 var db = fire.firestore()
 import { io } from "./../app/web.js"
 
-const create = async (data) => { 
-    // Logic to insert data to database
+const create = async (data) => {
     db.collection(data.collection).add({
         akselerometer: data.akselerometer,
         kelembapan: data.kelembapan,
@@ -11,20 +10,26 @@ const create = async (data) => {
         korosi: data.korosi,
     })
 
-    // Send data to client
+    // Send data to Socket server
     io.emit('data', data)
 
     return data
 }
 
 const findAllByCollection = async (collection) => {
-    // Logic to get all data from database
     const data = db.collection(collection).get()
 
     return (await data).docs.map(doc => doc.data())
 }
 
+const findAllCollections = async () => {
+    const collections = db.listCollections()
+
+    return (await collections).map(collection => collection.id)
+}
+
 export default {
     create,
+    findAllCollections,
     findAllByCollection
 }
