@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>History</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+            integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <style>
+        * {
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, rgba(166, 193, 255, 0.8), rgba(107, 115, 183, 0.8));
+            background-repeat: no-repeat;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0;
+        }
+
+        .collection-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #0f355d;
+            text-align: center;
+        }
+
+        .data-collection {
+            margin-top: 20px;
+            width: 80%;
+        }
+
+        table tr td {
+            border: 1px solid black;
+            padding: 16px;
+        }
+
+        table thead {
+            background-color: bisque;
+        }
+
+        table tbody {
+            background-color: beige;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        #collection-title {
+            padding: 2px 4px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .back {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #0f355d;
+            color: #fff;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .back:hover {
+            background-color: #0c2b4b;
+        }
+    </style>
+</head>
+<body>
+    <h1>History</h1>
+    <a href="./index.html">
+        <button class="back">Back</button>
+    </a>
+    <div class="data-collection">
+        <table>
+            <thead>
+                <tr>
+                    <td colspan="4" class="collection-title">
+                        Data dari collection:
+                        <select id="collection-title">
+
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Akselerometer</td>
+                    <td>Kelembapan</td>
+                    <td>Tegangan</td>
+                    <td>Korosi</td>
+                </tr>
+            </thead>
+
+            <tbody id="collection-data"></tbody>
+        </table>
+    </div>
+
+    <script>
+        const BASE_URL = "https://omnetsupport-tin-0f1c07ee5e8f.herokuapp.com";
+        const collectionTitle = document.getElementById('collection-title');
+        const collectionData = document.getElementById('collection-data');
+        const dataDisplay = document.querySelector('.data-collection table');
+
+
+        $.ajax({
+            url: `${BASE_URL}/collections`,
+            type: 'GET',
+            success: function (data) {
+                data?.data.forEach((collection) => {
+                    const option = document.createElement('option');
+                    option.value = collection;
+                    option.text = collection;
+                    collectionTitle.appendChild(option);
+                });
+
+                getCollectionData()
+            }
+        });
+
+        collectionTitle.addEventListener('change', function () {
+            getCollectionData()
+        });
+
+        function getCollectionData() {
+            const collection = collectionTitle.value;
+
+            $.ajax({
+                url: `${BASE_URL}/data/${collection}`,
+                type: 'GET',
+                success: function (data) {
+                    collectionData.innerHTML = '';
+                    data?.data.forEach((item) => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td>${item.akselerometer} m/s<sup>2</sup></td>
+                            <td>${item.kelembapan}% RH</td>
+                            <td>${item.tegangan} V</td>
+                            <td>${item.korosi} mm/th</td>
+                        `;
+                        collectionData.appendChild(row);
+                    });
+                }
+            });
+        };
+    </script>
+</body>
+</html>
